@@ -71,7 +71,7 @@ function config($key = '')
 		
 		
 		//AI Assistant Rules for pickup entity;
-		'prescription_suffix_keywords' => array('汤', '丸', '散', '丹', '膏', '饮', '圆', '酒', '片', '合剂', '颗粒', '糖浆', '胶囊', '口服液'),
+		'prescription_suffix_keywords' => array('汤', '丸', '散', '丹', '膏', '饮', '圆', '酒', '片', '合剂', '颗粒', '糖浆', '胶囊', '口服液', '方'),
 		'material_suffix_keywords' => array('草', '花', '根', '枝', '叶', '莲', '子', '皮', '香'),
     ];
 

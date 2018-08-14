@@ -120,9 +120,35 @@ function sql_update_str($table, $colum_array, $value_array, $cond)
 }
 
 
+/*
+* check of current OS is Windows or Linux
+*/
+function is_os_linux()
+{
+	$os_name=PHP_OS;
+	if(strpos($os_name,"Linux")!==false){
+    	return true;
+	}else if(strpos($os_name,"WIN")!==false){
+		return false;
+	}
+}
+function check_os()
+{
+	$os_name=PHP_OS;
+	if(strpos($os_name,"Linux")!==false){
+    	$os_str="Linuxæ“ä½œç³»ç»Ÿ";
+	}else if(strpos($os_name,"WIN")!==false){
+    	$os_str="Windowsæ“ä½œç³»ç»Ÿ";
+	}else{
+		$os_str="error";
+	}
+	return $os_str;
+}
+
+
 
 /**
- * utf-8 ×ªunicode
+ * utf-8 è½¬unicode
  * @param string $name
  * @return string
  */
@@ -143,7 +169,7 @@ function myutf8_unicode($name){
 }
 
 /**
- * unicode ×ª utf-8
+ * unicode è½¬ utf-8
  *
  * @param string $name
  * @return string
@@ -151,7 +177,7 @@ function myutf8_unicode($name){
 function myunicode_decode($name)
 {
     $name = strtolower($name);
-    // ×ª»»±àÂë£¬½«Unicode±àÂë×ª»»³É¿ÉÒÔä¯ÀÀµÄutf-8±àÂë
+    // è½¬æ¢ç¼–ç ï¼Œå°†Unicodeç¼–ç è½¬æ¢æˆå¯ä»¥æµè§ˆçš„utf-8ç¼–ç 
     $pattern = '/([\w]+)|(\\\u([\w]{4}))/i';
     preg_match_all($pattern, $name, $matches);
     if (! empty($matches)) {

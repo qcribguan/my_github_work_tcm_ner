@@ -90,7 +90,14 @@ function cleanBookName($name)
 */
 function editorContent($book, $flag)
 {
+	//echo check_os();
+	//echo "=========test=======";
 	$book_path = getBookPath().'\\'.$book;
+	if (is_os_linux()){
+		$book_path = str_replace('\\', '/', $book_path);
+	}
+	//echo $book_path;
+	
 	//echo $book_path;	
 	$book_name = cleanBookName($book);
 	
