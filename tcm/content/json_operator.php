@@ -27,27 +27,39 @@ function getBookList()
 		<td style="width: 11%;">实体抽取链接</td>
 	</tr>';
 	if ($handle){
-		$index = 0;
+
+		$book_name_arr = array();
 		while( ($filename = readdir($handle)) !== false ){
  			//ignore . and .. direcotries under Linux
  			if($filename != "." && $filename != ".."){
 				//if (is_file($filename)){
 				if (!in_array($filename, $book_excpet_list)){
 					$book_name = cleanBookName($filename);
-					$update_t = query_correct_version($book_name);
-					$index += 1;
-					
-					echo '<tr><td>'.$index.'</td>';
-		   			echo '<td><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">'.$book_name.'</a></br></td>';
-					echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'">原始版本</a></br></td>';
-					echo '<td align=center>'.(null !== $update_t ? '<a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">校正版本</a></br></td>' : '').'</td>';
-					echo '<td align=center>'.(null !== $update_t ? $update_t : '').'</td>';
-					echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_entity').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">实体抽取</a></br></td>';
-					echo '</tr>';
+					$book_name_arr[] = $book_name;
 				}
   			}
 		}
 		closedir($handle);
+		
+		$bh = new bihua();
+		$book_name_arr_ordered = $bh->sortBihuaFirstTwoCh($book_name_arr);
+		$index = 0;
+		foreach ($book_name_arr_ordered as $key => $book_name){		
+			$update_t = query_correct_version($book_name);
+			$filename = $book_name.".json";
+			$index += 1;
+			
+			echo '<tr><td>'.$index.'</td>';
+			echo '<td><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">'.$book_name.'</a></br></td>';
+			echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'">原始版本</a></br></td>';
+			echo '<td align=center>'.(null !== $update_t ? '<a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">校正版本</a></br></td>' : '').'</td>';
+			echo '<td align=center>'.(null !== $update_t ? $update_t : '').'</td>';
+			echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_entity').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">实体抽取</a></br></td>';
+			echo '</tr>';
+					
+		}
+		
+		
 	}
 	echo '</table></div>';
 }
