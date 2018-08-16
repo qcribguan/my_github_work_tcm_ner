@@ -2,6 +2,7 @@
 
 /*
 * TODO: Query all the corrected disease, material and prescription entities from our DB
+* [not used]
 */
 function db_query_all_correct_entity($entity_type)
 {

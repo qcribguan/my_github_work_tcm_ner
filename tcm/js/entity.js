@@ -96,7 +96,10 @@ function btn_save_entity(){
 	var html=document.getElementById("right_div_entity").innerHTML;
 	//alert("right:"+html);
 	
-	reg = /id="btn_entity_new_([\u4e00-\u9fa5]+)" style="background:([#,\(,\),\s,\,,0-9,a-z,A-Z]+);/gi
+	//for chrome, 360 browser, but not work for firefox
+	//reg = /id="btn_entity_new_([\u4e00-\u9fa5]+)" style="background:([#,\(,\),\s,\,,0-9,a-z,A-Z]+);/gi
+	//for chrome, 360 browser, firefox
+	reg = /id="btn_entity_new_([\u4e00-\u9fa5]+)" style="background:([#,\(,\),\s,\,,0-9,a-z,A-Z,%]+);/gi
 	var result;
 	var entity_str = "";
 	if((result = html.match(reg)) != null){
@@ -104,7 +107,8 @@ function btn_save_entity(){
 			var entity = result[i].match(/new_(\S*)" style/)[1];
 			var type;
 			if (result[i].indexOf("rgb") != -1){
-				type = result[i].match(/background:([\(,\),\s,\,,0-9,a-z,A-Z]+);/)[1];
+				//type = result[i].match(/background:([\(,\),\s,\,,0-9,a-z,A-Z]+);/)[1];
+				type = result[i].match(/background:([\(,\s,\,,0-9,a-z,A-Z]+)\)/)[1];
 				type = colorRGB2Hex(type).toUpperCase();
 			}
 			else{
