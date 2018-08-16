@@ -38,6 +38,7 @@ function changeEntityType(btn){
 	var entityType = arr[1];
 	var entity = document.getElementById(entityId);
 	entity.style.background = dic_json[entityType];	
+	//alert(dic_json[entityType] + "==" + entity.style.background);
 	
 	var content = document.getElementById("tips1");
 	content.style.display="none";
@@ -95,13 +96,20 @@ function btn_save_entity(){
 	var html=document.getElementById("right_div_entity").innerHTML;
 	//alert("right:"+html);
 	
-	reg = /id="btn_entity_new_([\u4e00-\u9fa5]+)" style="background:(#[0-9,a-z,A-Z]+);/gi
+	reg = /id="btn_entity_new_([\u4e00-\u9fa5]+)" style="background:([#,\(,\),\s,\,,0-9,a-z,A-Z]+);/gi
 	var result;
 	var entity_str = "";
 	if((result = html.match(reg)) != null){
 		for (var i=0;i<result.length;i++){
 			var entity = result[i].match(/new_(\S*)" style/)[1];
-			var type = result[i].match(/background:(\S*);/)[1].toUpperCase();
+			var type;
+			if (result[i].indexOf("rgb") != -1){
+				type = result[i].match(/background:([\(,\),\s,\,,0-9,a-z,A-Z]+);/)[1];
+				type = colorRGB2Hex(type).toUpperCase();
+			}
+			else{
+				type = result[i].match(/background:(\S*);/)[1].toUpperCase();
+			}
 
 			for (var p in dic_json){
 				if (type == dic_json[p] && p != "delete"){
@@ -118,6 +126,9 @@ function btn_save_entity(){
   	myform.submit();
 }
 
+/*
+*make sure all of the value of "background" is HEX, not RGB
+*/
 function btn_recommand_entity(){
 	var html=document.getElementById("left_div_entity").innerHTML;
 	//alert("left:"+html);

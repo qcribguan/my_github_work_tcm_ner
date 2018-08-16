@@ -20,6 +20,13 @@ function print_arr($arr)
 	echo "<br>";
 }
 
+/*
+* Call Javascript alert()
+*/
+function js_alert($str)
+{
+	echo '<script type="text/javascript">alert("'.$str.'")</script>';
+}
 
 /*
 * DB related

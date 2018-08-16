@@ -389,7 +389,7 @@ function db_query_entity_correct($title, $entity_type)
 * $tital: book name
 * $entity_type: disease, material, prescription, expert
 */
-function db_save_entity_correct($title, $entity_type, $entity_set)
+function db_save_entity_correct($title, $entity_type, $entity_set, $only_delete_flag = 0)
 {
 	$table = config('dbtab_book_entity_'.$entity_type);
 	$col_array = array("create_at", "update_at", "base_entity", "related_entity", "paragraph", "path", "position");
@@ -405,6 +405,9 @@ function db_save_entity_correct($title, $entity_type, $entity_set)
 		echo $e->getMessage();
 	}
 	
+	if ($only_delete_flag){
+		return;
+	}
 	
 	//2. insert current entities;
 	//insert ignore into set_book_expert_relation(create_at, update_at, base_entity, related_entity, paragraph, path, position) values ("0000-00-00 00:00:00", "0000-00-00 00:00:00", "书3","实体1","0","0","0"),("0000-00-00 00:00:00", "0000-00-00 00:00:00", "书3","实体2","0","0","0");
@@ -423,7 +426,7 @@ function db_save_entity_correct($title, $entity_type, $entity_set)
 
 		//return;		
 		$ret = $DB->execute($sql_str);
-		echo $DB->lastInsertId();
+		//echo $DB->lastInsertId();
 		/*echo '<script type="text/javascript">alert("保存成功！")</script>';*/
 	}
 	catch(PDOException $e){
@@ -468,4 +471,40 @@ function db_query_base_entity($entity_type)
 	}
 }
 
+/*
+* Query all the disease, material and prescription from our DB
+* [not used]
+*/
+function db_query_proof_entity($entity_type)
+{
+	$table = config('dbtab_book_entity_'.$entity_type);
+	$field = config('dbfield_name');
+		
+	try{
+		$DB = new DBPDO();
+		//check if this book is already in the database;
+		$sql_str = 'SELECT '.$field.' FROM '.$table;
+		//echo $sql_str;
+		$res = $DB->fetchAll($sql_str);
+		if (sizeof($res) == 0) {
+			return array();
+		}
+		else {
+			$res_array = array();
+			foreach ($res as $key => $val){
+				$res_array[] = $val[$field];
+			}
+			$res_array_uniq = array_unique($res_array);
+						
+			//foreach ($res_array_uniq as $key => $val){
+			//	echo $key.'--'.$val;
+			//}
+			
+			return $res_array_uniq;
+		}
+	}
+	catch(PDOException $e){
+		echo $e->getMessage();
+	}
+}
 

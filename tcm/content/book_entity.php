@@ -12,7 +12,7 @@ $flag = isset($_GET['flag']) ? $_GET['flag'] : null;
 //foreach ($_POST as $key => $val){
 //	echo $key.'='.$val.'<br>';
 //}
-if (isset($_POST["entity_correct"]) && trim($_POST["entity_correct"]) !="") {
+if (isset($_POST["entity_correct"])) {
 	$en_arr = array(
 		"disease" => array(),
     	"material" => array(),
@@ -35,16 +35,17 @@ if (isset($_POST["entity_correct"]) && trim($_POST["entity_correct"]) !="") {
 	
 	//echo "<br />";
 	foreach ($en_arr as $key => $val){
-		//echo $key.":".count($val)."|";
-		//foreach($val as $k=>$v){
-		//	echo $v.' ';
-		//}
-		//echo "<br />";
+		if (count($val)==0){
+			//only delete old entities
+			db_save_entity_correct(cleanBookName($book), $key, $val, 1);
+			continue;
+		}
+
+		//delete old and save the new
 		db_save_entity_correct(cleanBookName($book), $key, $val);
 	}
 	echo '<script type="text/javascript">alert("保存成功！")</script>';
 }
-
 
 
 //Then, load the page;
