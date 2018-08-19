@@ -14,6 +14,7 @@ function config($key = '')
 			'book_list' => '古籍列表',
             'book_proof' => '古籍校对',
             'book_entity' => '古籍实体抽取',
+			'book_entity_panel' => '实体统计',
             'about_us' => '关于我们',
         ],
 		'site_home' => 'tcm',
@@ -26,6 +27,7 @@ function config($key = '')
 		'book_holder' => 'D:\my_work\mysrc\TCMBigData\src\main\resources\static\book-holder',
 		'book_proof' => 'book_proof',
 		'book_entity' => 'book_entity',
+		'book_entity_panel' => 'book_entity_panel',
 		'book_download' =>'book_download',
 		
 		//DB connection

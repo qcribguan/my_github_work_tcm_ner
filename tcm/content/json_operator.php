@@ -8,10 +8,9 @@
 function getBookList()
 {
 	$book_excpet_list = array("content.json");
-	$result = array();
-	
+	$book_name_arr = array();
+
     $path = getBookPath();
-	
 	$handle = opendir($path);
 	/*其中$filename = readdir($handler)
 	每次循环时将读取的文件名赋值给$filename，$filename !== false。
@@ -27,8 +26,6 @@ function getBookList()
 		<td style="width: 11%;">实体抽取链接</td>
 	</tr>';
 	if ($handle){
-
-		$book_name_arr = array();
 		while( ($filename = readdir($handle)) !== false ){
  			//ignore . and .. direcotries under Linux
  			if($filename != "." && $filename != ".."){

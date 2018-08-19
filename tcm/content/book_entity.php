@@ -96,8 +96,10 @@ if (isset($_POST["entity_original"]) && trim($_POST["entity_original"]) !="") {
 	foreach($en_arr as $key => $val){
 		//echo "total_uncorrected_predicted_entity: ".count($en_total)."<br>";
 		
-		$db_total = db_query_base_entity($key);
+		$db_total1 = db_query_base_entity($key);
 		//echo $key." DB total: ".count($db_total);
+		$db_total2 = db_query_proof_entity($key);
+		$db_total = array_merge($db_total1, $db_total2);
 		
 		$en_arr[$key] = array_intersect($en_total, $db_total); 
 		//echo " AI_get_new_".$key."_entity: ".count($en_arr[$key])."<br>";
