@@ -132,7 +132,7 @@ function entityPanelContent()
 		
 		
 		echo '<tr><td>'.$index.'</td>';
-		echo '<td><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">'.$book_name.'</a></br></td>';
+		echo '<td><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_entity').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">'.$book_name.'</a></br></td>';
 		echo '<td>'.$auto_disease.'</td>';
 		echo '<td>'.$auto_material.'</td>';
 		echo '<td>'.$auto_prescription.'</td>';
