@@ -45,7 +45,7 @@ function config($key = '')
 		'dbtab_book_entity_disease' => 'set_book_disease_relation',
 		'dbtab_book_entity_material' => 'set_book_material_relation',
 		'dbtab_book_entity_prescription' => 'set_book_prescription_relation',
-		'dbfield_name' => 'base_entity',
+		'dbfield_name' => 'related_entity',
 		//DB tables: base type tables;
 		'dbtab_expert' => 'expert',
 		'dbtab_disease' => 'disease',
