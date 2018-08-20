@@ -85,3 +85,5 @@ define('DATABASE_NAME', config('db_name'));
 define('DATABASE_USER', config('db_user'));
 define('DATABASE_PASS', config('db_passwd'));
 define('DATABASE_HOST', config('db_host'));
+
+ini_set('memory_limit', '2048M');

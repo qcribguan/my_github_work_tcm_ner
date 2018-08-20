@@ -14,8 +14,9 @@ function entityStyle()
 function setEditorDisabled()
 {
 	echo '<script type="text/javascript">
-        UM.getEditor("myEditor").setDisabled("fullscreen");
-        //disableBtn("enable");
+		//setDisabled();
+		//UE.getEditor("editor").setDisabled("fullscreen");
+		editor_flag = 1;
 		</script>';
 }
 
@@ -24,7 +25,7 @@ function hiddenButton()
 	echo '<script type="text/javascript">
 		var btn = document.getElementById("save1");
        	btn.style.display = "none";
-	</script>';
+		</script>';
 }
 
 
@@ -200,7 +201,7 @@ function entityContent($book, $flag)
 	echo '
 	<script type="text/javascript">
 		function btn_submit3() {
-		//UM.getEditor("myEditor").sync();
+		//UM.getEditor("editor").sync();
 		//document.getElementById("flag").value = "export";
 		//document.book_content_form.action="1.htm"
 		var myform=document.getElementById("book_content_form");
@@ -346,6 +347,9 @@ function db_query_entity($title, $entity_type)
 	}
 }
 
+/*
+* query from "set_book_disease_relation"
+*/
 function db_query_entity_correct($title, $entity_type)
 {
 	$table = config('dbtab_book_entity_'.$entity_type);
@@ -472,8 +476,7 @@ function db_query_base_entity($entity_type)
 }
 
 /*
-* Query all the disease, material and prescription from our DB
-* [not used]
+* Query all the proofed disease, material and prescription from our DB
 */
 function db_query_proof_entity($entity_type)
 {
@@ -482,7 +485,6 @@ function db_query_proof_entity($entity_type)
 		
 	try{
 		$DB = new DBPDO();
-		//check if this book is already in the database;
 		$sql_str = 'SELECT '.$field.' FROM '.$table;
 		//echo $sql_str;
 		$res = $DB->fetchAll($sql_str);
@@ -495,11 +497,7 @@ function db_query_proof_entity($entity_type)
 				$res_array[] = $val[$field];
 			}
 			$res_array_uniq = array_unique($res_array);
-						
-			//foreach ($res_array_uniq as $key => $val){
-			//	echo $key.'--'.$val;
-			//}
-			
+	
 			return $res_array_uniq;
 		}
 	}
@@ -508,3 +506,33 @@ function db_query_proof_entity($entity_type)
 	}
 }
 
+/*
+* Query all the automatically recoganized disease, material and prescription from our DB
+*/
+function db_query_all_auto_entity($entity_type)
+{
+	$table = config('dbtab_auto_book_entity_'.$entity_type);
+	$field = config('dbfield_name');
+		
+	try{
+		$DB = new DBPDO();
+		$sql_str = 'SELECT '.$field.' FROM '.$table;
+		//echo $sql_str;
+		$res = $DB->fetchAll($sql_str);
+		if (sizeof($res) == 0) {
+			return array();
+		}
+		else {
+			$res_array = array();
+			foreach ($res as $key => $val){
+				$res_array[] = $val[$field];
+			}
+			$res_array_uniq = array_unique($res_array);
+			
+			return $res_array_uniq;
+		}
+	}
+	catch(PDOException $e){
+		echo $e->getMessage();
+	}
+}

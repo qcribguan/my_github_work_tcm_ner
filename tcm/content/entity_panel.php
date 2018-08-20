@@ -35,9 +35,15 @@ function entityPanelContent()
 {
 	$types = array("disease", "material", "prescription");
 
-	$auto_disease = count(db_query_base_entity($types[0]));
-	$auto_material = count(db_query_base_entity($types[1]));
-	$auto_prescription = count(db_query_base_entity($types[2]));
+	$base_disease = count(db_query_base_entity($types[0]));
+	$base_material = count(db_query_base_entity($types[1]));
+	$base_prescription = count(db_query_base_entity($types[2]));
+	$base_total = $base_disease + $base_material + $base_prescription;
+
+
+	$auto_disease = count(db_query_all_auto_entity($types[0]));
+	$auto_material = count(db_query_all_auto_entity($types[1]));
+	$auto_prescription = count(db_query_all_auto_entity($types[2]));
 	$auto_total = $auto_disease + $auto_material + $auto_prescription;
 
 	$proof_disease = count(db_query_proof_entity($types[0]));
@@ -53,6 +59,13 @@ function entityPanelContent()
     <td align="center" style="width: 15%;">方剂</td>
     <td align="center" style="width: 15%;">中草药</td>
     <td align="center" style="width: 15%;">总计</td>
+  </tr>
+  <tr align=center>
+    <td>系统原始词库实体</td>
+    <td>'.$base_disease.'</td>
+    <td>'.$base_material.'</td>
+    <td>'.$base_prescription.'</td>
+    <td>'.$base_total.'</td>
   </tr>
   <tr align=center>
     <td>系统自动抽取实体</td>
