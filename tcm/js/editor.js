@@ -1,65 +1,63 @@
 // JavaScript Document
     //实例化编辑器
-    var um = UM.getEditor('myEditor');
-    um.addListener('blur',function(){
-        $('#focush2').html('编辑器失去焦点了')
-    });
-    um.addListener('focus',function(){
-        $('#focush2').html('')
-    });
-    //按钮的操作
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+
+
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
     function insertHtml() {
         var value = prompt('插入html代码', '');
-        um.execCommand('insertHtml', value)
-    }
-    function isFocus(){
-        alert(um.isFocus())
-    }
-    function doBlur(){
-        um.blur()
+        UE.getEditor('editor').execCommand('insertHtml', value)
     }
     function createEditor() {
         enableBtn();
-        um = UM.getEditor('myEditor');
+        UE.getEditor('editor');
     }
     function getAllHtml() {
-        alert(UM.getEditor('myEditor').getAllHtml())
+        alert(UE.getEditor('editor').getAllHtml())
     }
     function getContent() {
         var arr = [];
         arr.push("使用editor.getContent()方法可以获得编辑器的内容");
         arr.push("内容为：");
-        arr.push(UM.getEditor('myEditor').getContent());
+        arr.push(UE.getEditor('editor').getContent());
         alert(arr.join("\n"));
     }
     function getPlainTxt() {
         var arr = [];
         arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
         arr.push("内容为：");
-        arr.push(UM.getEditor('myEditor').getPlainTxt());
+        arr.push(UE.getEditor('editor').getPlainTxt());
         alert(arr.join('\n'))
     }
     function setContent(isAppendTo) {
         var arr = [];
-        arr.push("使用editor.setContent('欢迎使用umeditor')方法可以设置编辑器的内容");
-        UM.getEditor('myEditor').setContent('欢迎使用umeditor', isAppendTo);
+        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
         alert(arr.join("\n"));
     }
     function setDisabled() {
-        UM.getEditor('myEditor').setDisabled('fullscreen');
+        UE.getEditor('editor').setDisabled('fullscreen');
         disableBtn("enable");
     }
 
     function setEnabled() {
-        UM.getEditor('myEditor').setEnabled();
+        UE.getEditor('editor').setEnabled();
         enableBtn();
     }
 
     function getText() {
         //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
-        var range = UM.getEditor('myEditor').selection.getRange();
+        var range = UE.getEditor('editor').selection.getRange();
         range.select();
-        var txt = UM.getEditor('myEditor').selection.getText();
+        var txt = UE.getEditor('editor').selection.getText();
         alert(txt)
     }
 
@@ -67,29 +65,29 @@
         var arr = [];
         arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
         arr.push("编辑器的纯文本内容为：");
-        arr.push(UM.getEditor('myEditor').getContentTxt());
+        arr.push(UE.getEditor('editor').getContentTxt());
         alert(arr.join("\n"));
     }
     function hasContent() {
         var arr = [];
         arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
         arr.push("判断结果为：");
-        arr.push(UM.getEditor('myEditor').hasContents());
+        arr.push(UE.getEditor('editor').hasContents());
         alert(arr.join("\n"));
     }
     function setFocus() {
-        UM.getEditor('myEditor').focus();
+        UE.getEditor('editor').focus();
     }
     function deleteEditor() {
         disableBtn();
-        UM.getEditor('myEditor').destroy();
+        UE.getEditor('editor').destroy();
     }
     function disableBtn(str) {
         var div = document.getElementById('btns');
-        var btns = domUtils.getElementsByTagName(div, "button");
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
         for (var i = 0, btn; btn = btns[i++];) {
             if (btn.id == str) {
-                domUtils.removeAttributes(btn, ["disabled"]);
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
             } else {
                 btn.setAttribute("disabled", "true");
             }
@@ -97,22 +95,40 @@
     }
     function enableBtn() {
         var div = document.getElementById('btns');
-        var btns = domUtils.getElementsByTagName(div, "button");
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
         for (var i = 0, btn; btn = btns[i++];) {
-            domUtils.removeAttributes(btn, ["disabled"]);
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
         }
     }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+        alert("已清空草稿箱")
+    }
+	
 	//////////////////////////////////////////
 	//my js starts from here
 	//////////////////////////////////////////
+	function my_init(){
+		if(typeof(editor_flag) != "undefined"){
+			//alert(editor_flag);
+			setDisabled();
+		}
+	}
+	my_init();
+
 	function btn_submit() {
-		//UM.getEditor('myEditor').sync();		
+		//UM.getEditor('editor').sync();		
 		var myform=document.getElementById("book_content_form");
   		myform.submit();
 	}
 
 	function btn_submit2_bak() {
-		//UM.getEditor('myEditor').sync();
+		//UM.getEditor('editor').sync();
 		//document.getElementById('flag').value = "export";
 		//document.book_content_form.action="1.htm"
 		var myform=document.getElementById("book_content_form");
@@ -121,12 +137,12 @@
 	}
 	
 	function btn_submit2(){
-		alert(UM.getEditor("myEditor").getAllHtml());
+		alert(UM.getEditor("editor").getAllHtml());
 		var oWD = new ActiveXObject("Word.Application");
 		var oDC = oWD.Documents.Add("",0,1);
 		var oRange = oDC.Range(0,1);
 		var sel = document.body.createTextRange();
-		sel.moveToElementText(UM.getEditor("myEditor").getAllHtml());
+		sel.moveToElementText(UM.getEditor("editor").getAllHtml());
 		sel.select();
 		sel.execCommand("Copy");
 		oRange.Paste();

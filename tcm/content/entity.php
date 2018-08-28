@@ -233,6 +233,17 @@ function entityContent($book, $flag)
 }
 
 
+function show_book_proof_link($book_name)
+{
+	$update_t = query_correct_version($book_name);
+	$filename = $book_name.".json";
+			
+	echo '<div><br />';
+	echo '查看古籍原文：<a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">'.$book_name.'</a></br>';
+	
+	echo '</div>';
+}
+
 /*
 * Show recommanded entities on the corrected side;
 *	$en_arr = array(

@@ -12,11 +12,11 @@ $book = isset($_POST['btitle']) ? $_POST['btitle'] : null;
 //}
 
 //If user submit the book after editing.
-if (isset($_POST["myEditor"])) {
+if (isset($_POST["editor"])) {
 	//echo "test111111";
 	//echo cleanBookName($book);
-	//echo $_POST["myEditor"];
-	downloadBook2Word(cleanBookName($book), $_POST["myEditor"]);
+	//echo $_POST["editor"];
+	downloadBook2Word(cleanBookName($book), $_POST["editor"]);
 }
 
 

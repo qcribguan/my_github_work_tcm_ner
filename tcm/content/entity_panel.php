@@ -28,8 +28,42 @@ function getAllBookList()
 	
 	return $book_name_arr;
 }
- 
- 
+
+
+//this function can be used to optimize the db query time in entityPanelContent()
+function tmp_bak()
+{
+	$base_disease_arr = db_query_base_entity($types[0]);
+	$base_material_arr = db_query_base_entity($types[1]);
+	$base_prescription_arr = db_query_base_entity($types[2]);
+	
+	$base_disease = count($base_disease_arr);
+	$base_material = count($base_material_arr);
+	$base_prescription = count($base_prescription_arr);
+	$base_total = $base_disease + $base_material + $base_prescription;
+
+
+	$auto_disease = count(db_query_all_auto_entity($types[0]));
+	$auto_material = count(db_query_all_auto_entity($types[1]));
+	$auto_prescription = count(db_query_all_auto_entity($types[2]));
+	$auto_total = $auto_disease + $auto_material + $auto_prescription;
+
+
+	$proof_disease_arr = db_query_proof_entity($types[0]);
+	$proof_material_arr = db_query_proof_entity($types[1]);
+	$proof_prescription_arr = db_query_proof_entity($types[2]);
+	
+	$proof_disease = count($proof_disease_arr);
+	$proof_material = count($proof_material_arr);
+	$proof_prescription = count($proof_prescription_arr);
+	$proof_total = $proof_disease + $proof_material + $proof_prescription;	
+	
+	
+	$total_disease = count(array_merge($base_disease_arr, $proof_disease_arr));
+	$total_material = count(array_merge($base_material_arr, $proof_material_arr));
+	$total_prescription = count(array_merge($base_prescription_arr, $proof_prescription_arr));
+	$total_total = $total_disease + $total_material + $total_prescription;	
+}
  
 function entityPanelContent()
 {
@@ -50,6 +84,13 @@ function entityPanelContent()
 	$proof_material = count(db_query_proof_entity($types[1]));
 	$proof_prescription = count(db_query_proof_entity($types[2]));
 	$proof_total = $proof_disease + $proof_material + $proof_prescription;	
+	
+	$total_disease = count(array_merge(db_query_base_entity($types[0]), db_query_proof_entity($types[0])));
+	$total_material = count(array_merge(db_query_base_entity($types[1]), db_query_proof_entity($types[1])));
+	$total_prescription = count(array_merge(db_query_base_entity($types[2]), db_query_proof_entity($types[2])));
+	$total_total = $total_disease + $total_material + $total_prescription;	
+	
+	
 
 	echo '<div>系统总实体数量</div>';
 	echo '<div><table border="1px" bordercolor="#CCCCCC" cellspacing="0px">
@@ -80,6 +121,13 @@ function entityPanelContent()
     <td>'.$proof_material.'</td>
     <td>'.$proof_prescription.'</td>
     <td>'.$proof_total.'</td>
+  </tr>
+  <tr align=center>
+    <td>系统现有实体总计</td>
+    <td>'.$total_disease.'</td>
+    <td>'.$total_material.'</td>
+    <td>'.$total_prescription.'</td>
+    <td>'.$total_total.'</td>
   </tr>';
   
 	echo '</table></div>';

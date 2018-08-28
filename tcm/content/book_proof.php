@@ -33,13 +33,13 @@ else {
 
 
 //If user submit the book after editing.
-if (isset($_POST["myEditor"])) {
-	//echo $_POST["myEditor"];
+if (isset($_POST["editor"])) {
+	//echo $_POST["editor"];
 	//echo cleanBookName($book);
 	//echo "get new content!";
 	
 	//save or update it in the database;
-	saveBook2Db(cleanBookName($book), $_POST["myEditor"]);
+	saveBook2Db(cleanBookName($book), $_POST["editor"]);
 }
 
 

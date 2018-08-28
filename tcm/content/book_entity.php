@@ -50,9 +50,12 @@ if (isset($_POST["entity_correct"])) {
 
 //Then, load the page;
 //show json book content in editor, and save button;
-editorContent($book, $flag);
-setEditorDisabled();
-hiddenButton();
+//editorContent($book, $flag);
+//setEditorDisabled();
+//hiddenButton();
+show_book_proof_link(cleanBookName($book));
+
+//editorContentTest();
 
 //show entiry extraction;
 entityContent(cleanBookName($book), $flag);
