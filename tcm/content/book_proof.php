@@ -48,6 +48,7 @@ if (isset($_POST["editor"])) {
 //show json book content in editor, and save button;
 editorContent($book, $flag);
 
+showReplaceFunc();
 //editorContentTest();
 
 

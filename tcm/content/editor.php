@@ -324,7 +324,7 @@ function load_correct_version($title)
 }
 
 /*
-*
+* not worked
 */
 function downloadBook2Word($filename, $content)
 {
@@ -332,4 +332,57 @@ function downloadBook2Word($filename, $content)
     header('Content-type:application/vnd.ms-word;charset=utf-8;name="'.$filename.'".doc');
     header('Content-Disposition:attachment;filename='.$filename.'.doc');
   	save2WordLocal($content);
+}
+
+
+/*
+* a replace function to edit the text using RegularExpresion
+*/
+function replaceHtml()
+{
+	echo '
+	<div class="panel" id="replace">
+			<div>辅助编辑功能：</div>
+			<div>字符串批量替换功能（正则表达式）</div>
+            <table>
+                <tr>
+                    <td width="240">原字符串（正则表达式）: </td>
+                    <td><input id="findtxt1" type="text" class="int"/></td>
+                </tr>
+                <tr>
+                    <td>替换新字符串: </td>
+                    <td><input id="replacetxt" type="text" class="int" /></td>
+                </tr>
+                <tr>
+                    <td>区分大小写</var></td>
+                    <td>
+                        <input id="matchCase1" type="checkbox" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="repalceAllBtn" type="button" class="btn" value="全部替换" onclick="replace_str()"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span id="replace-msg" style="color:red"></span>
+                    </td>
+                </tr>
+				<tr>
+					<td colspan="2">
+						<span id="example" style="color:red">例如：正则表达式"\\\\pa\d+.bmp\\\\r"可匹配所有类似"\pa1.bmp\r"的字符串。</span>
+					</td>
+				</tr>
+            </table>
+        </div>';
+}
+function showReplaceFunc()
+{
+	replaceHtml();	
 }

@@ -150,3 +150,26 @@
 		//window.close();
 		alert("test");
 	}
+
+	//Additional function: replace the string
+	function replace_str(){
+		var html = UE.getEditor('editor').getContent();
+		//alert(html);
+		var replacetext = document.getElementById("replacetxt").value;
+		var casesensitive = document.getElementById("matchCase1");
+ 
+        var regex = new RegExp(document.getElementById("findtxt1").value, 'g' + (casesensitive.checked ? '' : 'i'));
+		//replace
+		var ret = html.replace(regex, replacetext);
+		UE.getEditor('editor').setContent(ret);
+		
+		//how many matched
+		var result = html.match(regex);
+		if (null==result || 0==result.length) {
+			alert("没有匹配！");
+			return false;
+		}
+		var strResult = "共替换 " + result.length + " 处匹配!\r\n";
+		alert(strResult);
+			
+	}
