@@ -19,8 +19,8 @@ function getBookList()
 	echo '<div><table>
 	<tr align=center>
 		<td style="width: 5%;">序号</td>
-		<td style="width: 35%;">古籍书名</td>
-		<td style="width: 17%;">原始版本链接</td>
+		<td>古籍书名</td>
+		<td style="width: 30%;">原始版本链接</td>
 		<td style="width: 17%;">校正版本链接</td>
 		<td style="width: 15%;">最后校正日期</td>
 		<td style="width: 11%;">实体抽取链接</td>
@@ -46,9 +46,17 @@ function getBookList()
 			$filename = $book_name.".json";
 			$index += 1;
 			
+			$book_path = getBookPath().'\\'.$filename;
+			if (is_os_linux()){
+				$book_path = str_replace('\\', '/', $book_path);
+			}
+			$fzise = filesize_h($book_path);
+			
 			echo '<tr><td>'.$index.'</td>';
 			echo '<td><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">'.$book_name.'</a></br></td>';
-			echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'">原始版本</a></br></td>';
+			//echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'">原始版本</a></br></td>';
+			echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'">原始版本</a>('.$fzise.')</br></td>';
+
 			echo '<td align=center>'.(null !== $update_t ? '<a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">校正版本</a></br></td>' : '').'</td>';
 			echo '<td align=center>'.(null !== $update_t ? $update_t : '').'</td>';
 			echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_entity').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">实体抽取</a></br></td>';

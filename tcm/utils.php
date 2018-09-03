@@ -206,4 +206,36 @@ function myunicode_decode($name)
 }
 
 
+function tosize($bytes,$prec=2){
+    $rank=0;
+    $size=$bytes;
+    $unit="B";
+    while($size>1024){
+        $size=$size/1024;
+        $rank++;
+    }
+    $size=round($size,$prec);
+    switch ($rank){
+        case "1":
+            $unit="KB";
+            break;
+        case "2":
+            $unit="MB";
+            break;
+        case "3":
+            $unit="GB";
+            break;
+        case "4":
+            $unit="TB";
+            break;
+        default :
+
+    }
+    return $size." ".$unit;
+ }
+ 
+function filesize_h($filename){
+	return tosize(filesize($filename));
+}
+
 ?>
