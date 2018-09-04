@@ -80,13 +80,31 @@ function cleanBookName($name)
 	return preg_replace($pattern,'',$name);
 }
 
+/*
+* use some rules to clean the original json book or html json book
+* Most Important!!!
+*/
+function cleanBookContent($text)
+{
+	/*
+	1、	在部分古籍文本中会出现大量图片的文件名；
+	2、	出现KT、HT等字母；
+	3、	较多图书中会出现英文字符或“□”、“○”等符号，
+	*/
+	$kws = array("KT", "HT", "□", "○", "■", "●");
+	foreach ($kws as $key => $value){
+		$text = str_replace($value, "", $text);
+	}
+	return $text;
+}
+
 
 /*
 * show json book content in editor, and provide save button.
 * @flag: true: there is an corrected version, load it from DB; 
 * 		false: there is no DB version, load the original json version;
 */
-function editorContent($book, $flag)
+function editorContent($book, $flag, $ver)
 {
 	//echo check_os();
 	//echo "=========test=======";
@@ -120,7 +138,12 @@ function editorContent($book, $flag)
 		else{
 			#read from the json file and show it through the editor
 			#read from file to php variable
-			$json_string = file_get_contents($book_path);	
+			$json_string = file_get_contents($book_path);
+			if($ver){
+				#use some rules to clean the original json book
+				$json_string = cleanBookContent($json_string);
+			}
+			
 			#convert the str into json 
 			$data = json_decode($json_string, true); 
 			
@@ -315,7 +338,9 @@ function load_correct_version($title)
 			echo "Al-Oh, page lost";
 		}
 		else {
-			echo $res[0]['book_content'];
+			#echo $res[0]['book_content'];
+			#filter some keywords!
+			echo cleanBookContent($res[0]['book_content']);
 		}
 	}
 	catch(PDOException $e){

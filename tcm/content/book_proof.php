@@ -3,7 +3,9 @@ echo "古籍文本校对";
 
 $book = isset($_GET['book']) ? $_GET['book'] : null;
 $flag = isset($_GET['flag']) ? $_GET['flag'] : null;
-//echo $flag;
+$ver = isset($_GET['ver']) ? $_GET['ver'] : null;
+#echo $flag;
+#echo $ver;
 //echo $book;
 //foreach ($_GET as $key => $val)
 //{
@@ -46,7 +48,7 @@ if (isset($_POST["editor"])) {
 
 //Then, load the page;
 //show json book content in editor, and save button;
-editorContent($book, $flag);
+editorContent($book, $flag, $ver);
 
 showReplaceFunc();
 //editorContentTest();

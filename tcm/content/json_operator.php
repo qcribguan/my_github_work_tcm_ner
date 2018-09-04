@@ -53,7 +53,7 @@ function getBookList()
 			$fzise = filesize_h($book_path);
 			
 			echo '<tr><td>'.$index.'</td>';
-			echo '<td><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'">'.$book_name.'</a></br></td>';
+			echo '<td><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'&flag='.(null !== $update_t ? true : false).'&ver=true">'.$book_name.'</a></br></td>';
 			//echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'">原始版本</a></br></td>';
 			echo '<td align=center><a href="/'.(null !== config('site_home') && config('site_home') != ''? config('site_home').'/' : '').config('book_proof').'?book='.$filename.'">原始版本</a>('.$fzise.')</br></td>';
 
