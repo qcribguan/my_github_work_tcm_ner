@@ -238,4 +238,37 @@ function filesize_h($filename){
 	return tosize(filesize($filename));
 }
 
+function read_re_rule_file($file_path){
+	if(file_exists($file_path)){
+		$fp = fopen($file_path,"r");
+		$str = fread($fp,filesize($file_path));//指定读取大小，这里把整个文件内容读取出来
+		return str_replace("\r\n","<br />",$str);
+	}else{
+		echo "Warning: regular rules file is not found!";
+		return "";
+	}
+}
+
+function save_re_rules_file($file_path, $content){
+	$fh = fopen($file_path, "w");
+	$ret= fwrite($fh, $content);
+	if($ret > 0){
+		//echo "Save rules successfully!";
+		echo '<span style="color:red">替换规则保存成功，请刷新文本编辑页面重新加载文本！</span>';
+	}
+	fclose($fh);
+}
+
+function read_file($file_path){
+	if(file_exists($file_path)){
+		$fp = fopen($file_path,"r");
+		$str = fread($fp,filesize($file_path));//指定读取大小，这里把整个文件内容读取出来
+		#return str_replace("\r\n"," ",$str);
+		return trim($str);
+	}else{
+		echo "Warning: regular rules file is not found!";
+		return "";
+	}
+}
+
 ?>

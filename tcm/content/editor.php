@@ -83,6 +83,10 @@ function cleanBookName($name)
 /*
 * use some rules to clean the original json book or html json book
 * Most Important!!!
+*
+* $str="as2223adfsAAf0s4df0s中国人dD中南海DDfsdf";
+* echo preg_replace("/[a-z,A-Z,0-9]/","",$str); //去掉所有字母和数字
+*
 */
 function cleanBookContent($text)
 {
@@ -91,9 +95,61 @@ function cleanBookContent($text)
 	2、	出现KT、HT等字母；
 	3、	较多图书中会出现英文字符或“□”、“○”等符号，
 	*/
-	$kws = array("KT", "HT", "□", "○", "■", "●");
+	$kws_bak = array("KT", "HT", "□", "○", "■", "●", "\r");
+	$re_kws_bak = array("/p05-c16a\d+.bmp/");
+	
+	$kws = array();
+	$re_kws = array();
+	$replace_dest_arr = array();
+	$delimieter = "=>";
+	
+	$re_rules_str = "";
+	$re_rules_str = read_file(config('re_file'));
+	//echo $re_rules_str;
+	if ($re_rules_str == ""){
+		$kws = $kws_bak;
+		$re_kws = $re_kws_bak;
+	} else{
+		$arr = explode(";", $re_rules_str);
+		//echo count($arr);
+		foreach ($arr as $key => $val){
+			if(trim($val) == ""){
+				continue;
+			}
+			if (strstr($val, $delimieter)){
+				//echo $val;
+				$arr_tmp = explode($delimieter, $val);
+				$replace_dest_arr[$arr_tmp[0]] = $arr_tmp[1];
+				$val = trim($arr_tmp[0]);
+			}
+
+			if(strlen($val) >2 && substr($val, 0, 1) == '/' && substr($val, -1) == '/'){				
+				array_push($re_kws, $val);
+			}else{
+				array_push($kws, $val);
+			}
+		}
+	}	
+	//print_r($kws);
+	//print_r($re_kws);
+	//print_r($replace_dest_arr);
+	
+	#replace the string
 	foreach ($kws as $key => $value){
-		$text = str_replace($value, "", $text);
+		if (isset($replace_dest_arr[$value])){
+			$text = str_replace($value, $replace_dest_arr[$value], $text);
+		}else{
+			$text = str_replace($value, "", $text);
+		}
+	}
+	
+	#regularly replace the string
+	foreach ($re_kws as $key => $value){
+		if (isset($replace_dest_arr[$value])){
+			$text = preg_replace($value, $replace_dest_arr[$value], $text);
+		}else{
+			$text = preg_replace($value, " ", $text);
+		}
 	}
 	return $text;
 }
@@ -367,7 +423,7 @@ function replaceHtml()
 {
 	echo '
 	<div class="panel" id="replace">
-			<div>辅助编辑功能：</div>
+			<div><strong>辅助编辑功能：</strong></div>
 			<div>字符串批量替换功能（正则表达式）</div>
             <table>
                 <tr>
@@ -407,6 +463,8 @@ function replaceHtml()
             </table>
         </div>';
 }
+
+
 function showReplaceFunc()
 {
 	replaceHtml();	

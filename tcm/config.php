@@ -15,6 +15,7 @@ function config($key = '')
             'book_proof' => '古籍校对',
             'book_entity' => '古籍实体抽取',
 			'book_entity_panel' => '实体统计',
+			'proof_setting' => '设置',
             'about_us' => '关于我们',
         ],
 		'site_home' => 'tcm',
@@ -76,6 +77,10 @@ function config($key = '')
 		//AI Assistant Rules for pickup entity;
 		'prescription_suffix_keywords' => array('汤', '丸', '散', '丹', '膏', '饮', '圆', '酒', '片', '合剂', '颗粒', '糖浆', '胶囊', '口服液', '方'),
 		'material_suffix_keywords' => array('草', '花', '根', '枝', '叶', '莲', '子', '皮', '香'),
+		
+		
+		//regular expression saved file
+		're_file' => 'data/regular_expression_db.txt'
     ];
 
     return isset($config[$key]) ? $config[$key] : null;

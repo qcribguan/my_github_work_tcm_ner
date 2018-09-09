@@ -5,6 +5,7 @@ require 'config.php';
 require 'functions.php';
 require 'content/editor.php';
 require 'content/entity.php';
+require 'content/setting.php';
 require 'content/entity_panel.php';
 require 'content/tools.php';
 include_once('php_db_op/class.DBPDO.php');
