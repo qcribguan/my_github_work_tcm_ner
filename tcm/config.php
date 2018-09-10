@@ -26,6 +26,7 @@ function config($key = '')
 		'foot' => '中国科学院软件研究所',
 		// the directory that hold all of the json book
 		'book_holder' => 'D:\my_work\mysrc\TCMBigData\src\main\resources\static\book-holder',
+		'book_list' => 'book_list',
 		'book_proof' => 'book_proof',
 		'book_entity' => 'book_entity',
 		'book_entity_panel' => 'book_entity_panel',
@@ -80,7 +81,10 @@ function config($key = '')
 		
 		
 		//regular expression saved file
-		're_file' => 'data/regular_expression_db.txt'
+		're_file' => 'data/regular_expression_db.txt',
+		
+		//show items on one page
+		'page_items_default' => 25,
     ];
 
     return isset($config[$key]) ? $config[$key] : null;
@@ -92,3 +96,4 @@ define('DATABASE_PASS', config('db_passwd'));
 define('DATABASE_HOST', config('db_host'));
 
 ini_set('memory_limit', '2048M');
+set_time_limit(0);

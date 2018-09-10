@@ -1,9 +1,16 @@
 <?php
 echo "古籍实体抽取";
 
-//require 'book_proof.php';
-$book = isset($_GET['book']) ? $_GET['book'] : null;
-$flag = isset($_GET['flag']) ? $_GET['flag'] : null;
+//set default value
+$book_default = "一草亭目科全书";
+$flag_default = 1;
+
+
+//$book = isset($_GET['book']) ? $_GET['book'] : null;
+//$flag = isset($_GET['flag']) ? $_GET['flag'] : null;
+$book = isset($_GET['book']) ? $_GET['book'] : $book_default;
+$flag = isset($_GET['flag']) ? $_GET['flag'] : $flag_default;
+
 //echo $book;
 //echo $flag;
 

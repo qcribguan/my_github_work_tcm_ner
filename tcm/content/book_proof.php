@@ -1,9 +1,18 @@
 <?php
 echo "古籍文本校对";
 
-$book = isset($_GET['book']) ? $_GET['book'] : null;
-$flag = isset($_GET['flag']) ? $_GET['flag'] : null;
-$ver = isset($_GET['ver']) ? $_GET['ver'] : null;
+$book_default = "一草亭目科全书";
+$flag_default = 1;
+$ver_default = 1;
+
+//$book = isset($_GET['book']) ? $_GET['book'] : null;
+//$flag = isset($_GET['flag']) ? $_GET['flag'] : null;
+//$ver = isset($_GET['ver']) ? $_GET['ver'] : null;
+
+$book = isset($_GET['book']) ? $_GET['book'] : $book_default;
+$flag = isset($_GET['flag']) ? $_GET['flag'] : $flag_default;
+$ver = isset($_GET['ver']) ? $_GET['ver'] : $ver_default;
+
 #echo $flag;
 #echo $ver;
 //echo $book;

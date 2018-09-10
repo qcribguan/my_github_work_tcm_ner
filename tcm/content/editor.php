@@ -469,3 +469,9 @@ function showReplaceFunc()
 {
 	replaceHtml();	
 }
+
+
+function showBookSelect()
+{
+	echo '<>';
+}
